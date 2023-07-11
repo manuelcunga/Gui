@@ -17,8 +17,15 @@ func main() {
 
 	generateController := controller.NewGenerateHandler(generatorUsecase)
 
+	e.GET("/", home())
 	e.POST("/api/v1/gui/generate", generateController.Handle)
 
 	e.Logger.Fatal(e.Start(":5000"))
 
+}
+
+func home() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return c.String(200, "Welcome to GUI-IA!")
+	}
 }
