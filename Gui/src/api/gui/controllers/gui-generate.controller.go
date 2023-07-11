@@ -29,10 +29,10 @@ func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
 			"error": "Invalid request payload",
 		})
 	}
-	fmt.Println("mensagem vindo do user",requestBody.Body )
+
+	fmt.Println("mensagem vindo do user", requestBody.Body)
 
 	text, err := utils.ParseBase64RequestData(requestBody.Body)
-
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"error": err.Error(),
@@ -52,5 +52,6 @@ func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
 		Text: gptText,
 	}
 
+	fmt.Println("Resposta do gpt", response)
 	return c.JSON(http.StatusOK, response)
 }

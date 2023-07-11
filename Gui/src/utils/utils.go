@@ -7,20 +7,20 @@ import (
 )
 
 func ParseBase64RequestData(response string) (string, error) {
-	dataBytes, err := base64.StdEncoding.DecodeString(response)
-	if err != nil {
-		return "", err
-	}
-
-	data, err := url.ParseQuery(string(dataBytes))
+	data, err := url.ParseQuery(response)
 	if err != nil {
 		return "", err
 	}
 
 	body := data.Get("Body")
-	if body != "" {
-		return body, nil
+	if body == "" {
+		return "", errors.New("Body not found")
 	}
 
-	return "", errors.New("Body not found")
+	decoded, err := base64.URLEncoding.DecodeString(body)
+	if err != nil {
+		return "", err
+	}
+
+	return string(decoded), nil
 }
