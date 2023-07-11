@@ -18,7 +18,7 @@ type OpenAIGenerator struct {
 	Token  string
 }
 
-func NewOpenAIGenerator(client *http.Client, token string) *OpenAIGenerator {
+func NewOpenAIGeneratorUsecase(client *http.Client, token string) *OpenAIGenerator {
 	return &OpenAIGenerator{
 		Client: client,
 		Token:  token,

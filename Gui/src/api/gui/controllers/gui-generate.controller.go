@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -8,15 +9,11 @@ import (
 	"github.com/manuelcunga/Gui/Gui/src/utils"
 )
 
-// type GenerateGuiGPTController struct {
-// 	GPTGenerator contract.IGPTGenerator
-// }
-
 type GenerateGuiGPTController struct {
 	GuiGPTGeneratorUsecase usecase.GPTGeneratorUsecase
 }
 
-func NewGenerateHandler(generator usecase.GPTGeneratorUsecase) *GenerateGuiGPTController {
+func NewGenerateController(generator usecase.GPTGeneratorUsecase) *GenerateGuiGPTController {
 	return &GenerateGuiGPTController{
 		GuiGPTGeneratorUsecase: generator,
 	}
@@ -24,7 +21,7 @@ func NewGenerateHandler(generator usecase.GPTGeneratorUsecase) *GenerateGuiGPTCo
 
 func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
 	requestBody := struct {
-		Body string `json:"body"`
+		Body string `json:"Body"`
 	}{}
 
 	if err := c.Bind(&requestBody); err != nil {
@@ -32,6 +29,7 @@ func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
 			"error": "Invalid request payload",
 		})
 	}
+	fmt.Println("mensagem vindo do user",requestBody.Body )
 
 	text, err := utils.ParseBase64RequestData(requestBody.Body)
 

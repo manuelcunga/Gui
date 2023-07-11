@@ -11,9 +11,9 @@ import (
 func main() {
 	e := echo.New()
 
-	generatorUsecase := usecase.NewOpenAIGenerator(http.DefaultClient, "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")
+	generatorUsecase := usecase.NewOpenAIGeneratorUsecase(http.DefaultClient, "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")
 
-	generateController := controller.NewGenerateHandler(generatorUsecase)
+	generateController := controller.NewGenerateController(generatorUsecase)
 
 	e.GET("/", home())
 	e.POST("/api/v1/gui/generate", generateController.Handle)
@@ -24,6 +24,6 @@ func main() {
 
 func home() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		return c.String(200, "Welcome to GUI-IA!")
+		return c.String(http.StatusOK, "Welcome to GUI-IA!")
 	}
 }
