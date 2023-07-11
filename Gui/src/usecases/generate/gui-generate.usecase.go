@@ -57,8 +57,6 @@ func (o *OpenAIGenerator) GenerateText(query string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
-	fmt.Println("Response do caso de uso", response)
 	defer response.Body.Close()
 
 	fmt.Println("resposta do gpt32:", response.Body)
