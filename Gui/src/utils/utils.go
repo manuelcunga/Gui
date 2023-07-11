@@ -2,13 +2,9 @@ package utils
 
 import (
 	"encoding/base64"
-	"encoding/json"
 	"errors"
+	"strings"
 )
-
-type RequestData struct {
-	Content string `json:"content"`
-}
 
 func ParseBase64RequestData(response string) (string, error) {
 	dataBytes, err := base64.StdEncoding.DecodeString(response)
@@ -16,14 +12,10 @@ func ParseBase64RequestData(response string) (string, error) {
 		return "", err
 	}
 
-	var reqData RequestData
-	if err := json.Unmarshal(dataBytes, &reqData); err != nil {
-		return "", err
+	body := strings.TrimSpace(string(dataBytes))
+	if body != "" {
+		return body, nil
 	}
 
-	if reqData.Content != "" {
-		return reqData.Content, nil
-	}
-
-	return "", errors.New("Content not found")
+	return "", errors.New("Body not found")
 }
