@@ -72,5 +72,5 @@ func (o *OpenAIGenerator) GenerateText(query string) (string, error) {
 		return "", err
 	}
 
-	return res.Choices[0].Message.Content, nil
+	return res.Choices[0].Text, nil
 }
