@@ -2,25 +2,28 @@ package utils
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"errors"
-	"net/url"
 )
 
+type RequestData struct {
+	Content string `json:"content"`
+}
+
 func ParseBase64RequestData(response string) (string, error) {
-	data, err := url.ParseQuery(response)
+	dataBytes, err := base64.StdEncoding.DecodeString(response)
 	if err != nil {
 		return "", err
 	}
 
-	body := data.Get("Body")
-	if body == "" {
-		return "", errors.New("Body not found")
-	}
-
-	decoded, err := base64.URLEncoding.DecodeString(body)
-	if err != nil {
+	var reqData RequestData
+	if err := json.Unmarshal(dataBytes, &reqData); err != nil {
 		return "", err
 	}
 
-	return string(decoded), nil
+	if reqData.Content != "" {
+		return reqData.Content, nil
+	}
+
+	return "", errors.New("Content not found")
 }

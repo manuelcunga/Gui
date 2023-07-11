@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 	usecase "github.com/manuelcunga/Gui/Gui/src/usecases/generate"
+	"github.com/manuelcunga/Gui/Gui/src/utils"
 )
 
 type GenerateGuiGPTController struct {
@@ -19,9 +19,9 @@ func NewGenerateController(generator usecase.GPTGeneratorUsecase) *GenerateGuiGP
 }
 
 func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
-	var requestBody struct {
+	requestBody := struct {
 		Body string `json:"body"`
-	}
+	}{}
 
 	if err := c.Bind(&requestBody); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -29,9 +29,14 @@ func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
 		})
 	}
 
-	fmt.Println("mensagem vindo do user:", requestBody.Body)
+	text, err := utils.ParseBase64RequestData(requestBody.Body)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"error": err.Error(),
+		})
+	}
 
-	gptText, err := ctrl.GuiGPTGeneratorUsecase.GenerateText(requestBody.Body)
+	gptText, err := ctrl.GuiGPTGeneratorUsecase.GenerateText(text)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"error": "Failed to generate GPT text",
@@ -44,6 +49,5 @@ func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
 		Text: gptText,
 	}
 
-	fmt.Println("Resposta do GPT:", response)
 	return c.JSON(http.StatusOK, response)
 }

@@ -3,6 +3,7 @@ package usecase
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -38,6 +39,7 @@ func (o *OpenAIGenerator) GenerateText(query string) (string, error) {
 	}
 
 	reqJSON, err := json.Marshal(req)
+	fmt.Println("convertendo em json:", req)
 	if err != nil {
 		return "", err
 	}
@@ -57,7 +59,9 @@ func (o *OpenAIGenerator) GenerateText(query string) (string, error) {
 	}
 	defer response.Body.Close()
 
+	fmt.Println("resposta do gpt32:", response.Body)
 	responseBody, err := ioutil.ReadAll(response.Body)
+
 	if err != nil {
 		return "", err
 	}
