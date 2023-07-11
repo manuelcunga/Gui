@@ -16,7 +16,7 @@ func main() {
 	generateController := controller.NewGenerateController(generatorUsecase)
 
 	e.GET("/", home())
-	e.POST("/api/v1/gui/generate", generateController.Handle)
+	e.POST("/", generateController.Handle)
 
 	e.Logger.Fatal(e.Start(":5000"))
 
