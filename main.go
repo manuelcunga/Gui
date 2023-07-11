@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	"os"
 
 	"github.com/labstack/echo/v4"
 	controller "github.com/manuelcunga/Gui/Gui/src/api/gui/controllers"
@@ -11,9 +10,8 @@ import (
 
 func main() {
 	e := echo.New()
-	token := os.Getenv("GPT_TOKEN")
 
-	generatorUsecase := usecase.NewOpenAIGenerator(http.DefaultClient, token)
+	generatorUsecase := usecase.NewOpenAIGenerator(http.DefaultClient, "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")
 
 	generateController := controller.NewGenerateHandler(generatorUsecase)
 
