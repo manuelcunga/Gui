@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -29,6 +30,8 @@ func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
 		})
 	}
 
+	fmt.Println("Mensangem do body", requestBody.Body)
+
 	text, err := utils.ParseBase64RequestData(requestBody.Body)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
@@ -48,6 +51,8 @@ func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
 	}{
 		Text: gptText,
 	}
+
+	fmt.Println("response do gpt", response)
 
 	return c.JSON(http.StatusOK, response)
 }
