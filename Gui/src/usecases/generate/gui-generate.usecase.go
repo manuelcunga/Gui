@@ -61,12 +61,12 @@ func (o *OpenAIGenerator) GenerateText(query string) (string, error) {
 	}
 	defer response.Body.Close()
 
-	fmt.Println("resposta do gpt32:", response.Body)
+	// responseBody, err := ioutil.ReadAll(response.Body)
 	responseBody, err := ioutil.ReadAll(response.Body)
-
 	if err != nil {
 		return "", err
 	}
+	fmt.Println("resposta do gpt32:", string(responseBody))
 
 	var res gui_types.Response
 	err = json.Unmarshal(responseBody, &res)

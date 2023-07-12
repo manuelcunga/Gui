@@ -34,15 +34,15 @@ func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
 
 	fmt.Println("Mensagem do body:", requestBody.Body)
 
-	text, err := utils.ParseBase64RequestData(requestBody.Body)
-	fmt.Println("from parse base 64", text)
+	result, err := utils.ParseBase64RequestData(requestBody.Body)
+	fmt.Println("from parse base 64", result)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"error": err.Error(),
 		})
 	}
 
-	gptText, err := ctrl.GuiGPTGeneratorUsecase.GenerateText(text)
+	gptText, err := ctrl.GuiGPTGeneratorUsecase.GenerateText(result)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"error": "Failed to generate GPT text",
