@@ -14,7 +14,7 @@ type GenerateGuiGPTController struct {
 }
 
 type RequestData struct {
-	Body string `json:"body"` // Atualize o nome do campo conforme necessário
+	Body string // Atualize o nome do campo conforme necessário
 }
 
 func NewGenerateController(generator usecase.GPTGeneratorUsecase) *GenerateGuiGPTController {
@@ -35,6 +35,7 @@ func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
 	fmt.Println("Mensagem do body:", requestBody.Body)
 
 	text, err := utils.ParseBase64RequestData(requestBody.Body)
+	fmt.Println("from parse base 64", text)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"error": err.Error(),

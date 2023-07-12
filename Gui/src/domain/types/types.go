@@ -5,21 +5,12 @@ type Messages struct {
 	Content string `json:"content"`
 }
 
-// type Choices struct {
-// 	Index   int `json:"index"`
-// 	Message struct {
-// 		Role    string `json:"role"`
-// 		Content string `json:"content"`
-// 	}
-// }
-
 type Choices struct {
-	FinishReason string `json:"finish_reason"`
-	Index        int    `json:"index"`
-	Logprobs     struct {
-		Tokens []string `json:"tokens"`
-	} `json:"logprobs"`
-	Text string `json:"text"`
+	Index   int `json:"index"`
+	Message struct {
+		Role    string `json:"role"`
+		Content string `json:"content"`
+	}
 }
 
 type Request struct {

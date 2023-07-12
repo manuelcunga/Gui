@@ -53,6 +53,8 @@ func (o *OpenAIGenerator) GenerateText(query string) (string, error) {
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", "Bearer "+token)
 
+	fmt.Println("Token from headers", request.Header.Get("token"))
+
 	response, err := o.Client.Do(request)
 	if err != nil {
 		return "", err
@@ -72,5 +74,5 @@ func (o *OpenAIGenerator) GenerateText(query string) (string, error) {
 		return "", err
 	}
 
-	return res.Choices[0].Text, nil
+	return res.Choices[0].Message.Content, nil
 }
