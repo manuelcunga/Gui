@@ -22,42 +22,6 @@ func NewGenerateController(generator usecase.GPTGeneratorUsecase) *GenerateGuiGP
 	}
 }
 
-// func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
-// 	requestBody := RequestData{}
-
-// 	if err := c.Bind(&requestBody); err != nil {
-// 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-// 			"error": "Invalid request payload",
-// 		})
-// 	}
-
-// 	fmt.Println("Mensagem do body:", requestBody.Body)
-
-// 	result, err := utils.ParseBase64RequestData(requestBody.Body)
-// 	fmt.Println("from parse base 64", result)
-// 	if err != nil {
-// 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-// 			"error": err.Error(),
-// 		})
-// 	}
-
-// 	gptText, err := ctrl.GuiGPTGeneratorUsecase.GenerateText(result)
-// 	if err != nil {
-// 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-// 			"error": "Failed to generate GPT text",
-// 		})
-// 	}
-
-// 	response := struct {
-// 		Text string `json:"text"`
-// 	}{
-// 		Text: gptText,
-// 	}
-
-// 	fmt.Println("Response do gpt:", response)
-
-// 	return c.JSON(http.StatusOK, response)
-// }
 
 func (ctrl *GenerateGuiGPTController) Handle(c echo.Context) error {
 	requestBody := RequestData{}
